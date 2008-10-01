@@ -1,0 +1,4 @@
+flex.sdk.dir=c:/tools/flex
+testAppPath=C:/Program Files/Mozilla Firefox/firefox.exe
+testAppFileName=bomberman.swf
+deploymentPath=c:/javaprojects/flextest/build

@@ -1,0 +1,12 @@
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:x="bomberman.*">
+    <mx:Panel>
+        <mx:Label id="lagLabel" name="lagLabel" text="lag: 0ms"/>
+        <x:Main id="game" addedToStage="init();"/>
+    </mx:Panel>
+
+    <mx:Script><![CDATA[
+        public function init():void {
+            game.createGame();
+        }
+]]></mx:Script>
+</mx:Application>
