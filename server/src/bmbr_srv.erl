@@ -20,13 +20,17 @@
 %%
 %% Exported Functions
 %%
--export([listen/1]).
+-export([listen/1, start/0]).
 
 -record(game, {id = "", maxplayers = 4, players = [], actions = []}).
 
 %%
 %% API Functions
 %%
+
+start() ->
+    listen(5555).
+    
 listen(Port) ->
     Pid = spawn(fun() -> manage_clients([]) end),
     register(client_manager, Pid),

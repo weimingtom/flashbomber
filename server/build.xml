@@ -1,0 +1,17 @@
+<project default="compile-server" basedir=".">
+    <target name="compile-server">
+        <exec dir="src" executable="erlc">
+            <arg value="bmbr_srv.erl"/>
+        </exec>
+
+        <move file="src/bmbr_srv.beam" todir="ebin"/>
+    </target>
+
+    <target name="run-server" depends="compile-server">
+        <exec dir="ebin" executable="erl" output="server.log" failonerror="true">
+            <arg value="-s"/>
+            <arg value="bmbr_srv"/>
+        </exec>
+        <sleep hours="99"/>
+    </target>
+</project>

@@ -1,4 +1,4 @@
-package game {
+package bomberman.domain {
 
 	import flash.display.Loader;	
 	import flash.display.Sprite;

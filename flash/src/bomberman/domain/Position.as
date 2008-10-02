@@ -1,4 +1,4 @@
-package game {
+package bomberman.domain {
 
 	public class Position {
 		

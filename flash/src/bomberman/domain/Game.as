@@ -1,4 +1,4 @@
-package game {
+package bomberman.domain {
 	
 	import mx.controls.Alert;
 	import flash.display.*;
