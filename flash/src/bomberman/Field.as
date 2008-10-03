@@ -69,8 +69,8 @@ public class Field extends Sprite {
     }
 
     public function canMove(x:int, y:int):Boolean {
-        var tilex:int = x / 40;
-        var tiley:int = y / 40;
+        var tilex:int = x / 32;
+        var tiley:int = y / 32;
 
         if (fieldTiles[tiley][tilex] == W)
             return false;

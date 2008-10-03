@@ -1,0 +1,9 @@
+How to get started:
+
+1) Download and install Flex3 SDK
+2) Download and install Erlang SDK
+3) Add Erlang bin directory to your shell path
+4) Copy the file flash/local.build.properties_template to flash/local.build.properties (Don't add it to version control, please)
+5) Fix the paths in the local.build.properties so that they point to your Flex installation directory as well as the dir you checked out the project to
+
+You can also change the executable to run the flash client in. By default it will be Firefox in a windows installation.

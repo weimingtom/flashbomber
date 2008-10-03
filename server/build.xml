@@ -7,11 +7,15 @@
         <move file="src/bmbr_srv.beam" todir="ebin"/>
     </target>
 
+    <!--
+    TODO make this work
     <target name="run-server" depends="compile-server">
-        <exec dir="ebin" executable="erl" output="server.log" failonerror="true">
+        <exec dir="ebin" executable="erl" spawn="true" newenvironment="true">
+            <arg value="-detached"/>
+            <arg value="-noshell"/>
             <arg value="-s"/>
             <arg value="bmbr_srv"/>
         </exec>
-        <sleep hours="99"/>
     </target>
+    -->
 </project>
