@@ -7,6 +7,10 @@
         <move file="src/bmbr_srv.beam" todir="ebin"/>
     </target>
 
+    <target name="clean">
+        <delete dir="ebin" includes="*.beam"/>
+    </target>
+
     <!--
     TODO make this work
     <target name="run-server" depends="compile-server">

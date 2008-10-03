@@ -3,6 +3,7 @@
     <property name="mxmlc.jar" location="${flex.sdk.dir}/lib/mxmlc.jar"/>
     <property name="deployDirectory" value="${deploymentPath}"/>
     <property name="testApplication" value="${testAppPath}"/>
+
     <target name="compile">
         <java
                 jar="${mxmlc.jar}"
@@ -15,9 +16,14 @@
             <arg line="-output='${deployDirectory}/${testAppFileName}'"/>
         </java>
     </target>
+
     <target name="run" depends="compile">
         <exec executable="${testApplication}" spawn="yes" dir="${deployDirectory}">
             <arg line="'${testAppFileName}'"/>
         </exec>
+    </target>
+
+    <target name="clean">
+        <delete dir="${deploymentPath}" includes="*.swf"/>
     </target>
 </project>
