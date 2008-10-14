@@ -1,0 +1,29 @@
+data format
+
+Client-sends:
+
+	- player position/movement
+	- player plants bomb
+	- join game (connect)
+	- leave game (disconnect)
+	
+	format:
+
+		"player_id:player_action"
+	
+Server sends:
+
+	TO_ALL:
+
+		- the (randomized) map
+		- game starts
+		- match starts
+		- match ends
+		- player positions
+
+	TO_SPECIFIC_PLAYER:
+	
+		- player picks up item
+		- player dies
+
+

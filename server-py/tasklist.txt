@@ -1,0 +1,25 @@
+tasklist
+
+
+- identify joined player with the unidentified connection in server
+
+- clarify if sendMessage() belongs to Server or Player
+
+- use global keyword with variables
+
+- does Players belong to Server or Arena or both?
+
+- do we need to echo received messages to all players immediately or buffer them?
+
+- tarkista mainloop järkevyys ... odottaako se oikein kaikilta socketeilta vastauksia, vai vain viimeiseltä
+
+- Server class is too big
+
+- write unit tests
+
+- decouple game-related things from the server (generic server)
+
+	- move message handling to the game
+	
+
+
