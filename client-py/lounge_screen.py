@@ -114,15 +114,15 @@ def main():
 		# This should show a blank 200 by 200 window centered on the screen
 		
 		drawArena()
-		while 1:		
+		looping = True
+		while looping:		
 			deltat = clock.tick(FRAMES_PER_SECOND)
-	
-			main()
-	
+		
 			pygame.display.flip()
-			#evt = pygame.event.wait()
-			#if evt.type == pygame.QUIT:
-			#	break
+			evt = pygame.event.wait()
+			if evt.type == pygame.QUIT:
+				looping = False
+				break
 	finally:
 		pygame.quit()  # Keep this IDLE friendly
 

@@ -10,3 +10,6 @@ class Tile:
 	def __init__(self):
 		pass
 
+	def update(self, deltat):
+		pass
+

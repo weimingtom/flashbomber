@@ -1,6 +1,6 @@
 import pygame
 
-class Player(pygame.Sprite):
+class Player(pygame.sprite.Sprite):
 
 	RED = 1;
 	BLUE = 2;
@@ -12,8 +12,8 @@ class Player(pygame.Sprite):
 	SKULL_STATE = 2;
 	state = NORMAL_STATE
 
-	playerName = ""
-	color = (0, 0, 0)
+	playerName = "unnamedPlayer"
+	color = 0
 	startPosition = (0, 0)
 	currentPosition = (0, 0)
 	amountOfBombs = 1;
@@ -21,24 +21,55 @@ class Player(pygame.Sprite):
 	hasKick = False;
 	hasMulti = False;
 
-	def moveLeft():
+	movingLeft = False
+	movingRight = False
+	movingUp = False
+	movingDown = False
+
+	def moveLeft(self):
+		self.movingLeft = True
+		
+	def moveRight(self):
+		self.movingRight = True
+		
+	def moveUp(self):
+		self.movingUp = True
+		
+	def moveDown(self):
+		self.movingDown = True
+
+	def clearMovement(self):
+		self.movingLeft = False
+		self.movingRight = False
+		self.movingUp = False
+		self.movingDown = False
+	
+	def dropBomb(self):
 		pass
 		
-	def moveRight():
+	def stopBomb(self):
 		pass
 		
-	def moveUp():
-		pass
+	def __init__(self, color, image, position):		
+		pygame.sprite.Sprite.__init__(self)
+		self.color = color
+		self.image = pygame.image.load(image)	# src_image?
+		self.position = position
+		self.rect = pygame.Rect(self.image.get_rect())
+		self.rect.center = position
+
+	def update(self, deltat):
+		x, y = self.position
+		if self.movingLeft:
+			x += -4
+		elif self.movingRight:			
+			x += 4
+		elif self.movingUp:			
+			y += -4
+		elif self.movingDown:			
+			y += 4
 		
-	def moveDown():
-		pass
-		
-	def dropBomb():
-		pass
-		
-	def stopBomb():
-		pass
-		
-	def draw():
-		pass
+		self.position = (x, y)
+		self.rect = self.image.get_rect()
+		self.rect.center = self.position
 

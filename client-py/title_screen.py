@@ -111,45 +111,48 @@ def scroller():
 		scrollX = screenW
 
 def drawLogo():
-	global screen
-	
+	global screen	
 	logo = pygame.image.load('images/gbomber_logo.png')
 	screen.blit(logo, ((screenW - logo.get_width())/2, 50))
+
+def main():
+	global screen
+	try:
+		screen = pygame.display.set_mode((screenW, screenH), pygame.DOUBLEBUF | pygame.HWSURFACE, 16)	# | pygame.FULLSCREEN
+		
+		setupBeam()
+		gc.disable()
 	
-try:
-	screen = pygame.display.set_mode((screenW, screenH), pygame.DOUBLEBUF | pygame.HWSURFACE, 16)
-	setupBeam()
-	gc.disable()
-
-
-	while 1:		
-		pygame.display.flip()
-		deltat = clock.tick(FRAMES_PER_SECOND)
-		#print deltat
-
-		# clear screen
-		screen.fill((0,0,0))
-
-		drawLogo()
-		updateBeams()
-		scroller()
-		
-		# draw screen
-
-		for event in pygame.event.get():
-			if not hasattr(event, 'key'): continue
-			down = event.type == KEYDOWN # key down or up?
-			if down:
-				if event.key == K_ESCAPE:
-					sys.exit(0) # quit the game
-				else:
-					lounge_screen.main()
-		
-		#evt = pygame.event.wait()
-		#if evt.type == pygame.QUIT:
-		#	break
-finally:
-	gc.enable()
-
-	pygame.quit()  # Keep this IDLE friendly
+		looping = True
+		while looping:		
+			pygame.display.flip()
+			deltat = clock.tick(FRAMES_PER_SECOND)
+			#print deltat
+	
+			# clear screen
+			screen.fill((0,0,0))
+	
+			drawLogo()
+			updateBeams()
+			scroller()
+			
+			# draw screen
+	
+			for event in pygame.event.get():
+				if not hasattr(event, 'key'): continue
+				down = event.type == KEYDOWN # key down or up?
+				if down:
+					if event.key == K_ESCAPE:
+						sys.exit(0) # quit the game
+					else:
+						looping = False
+						break
+						
+		# after breaking from the while loop, go to lounge screen
+		lounge_screen.main()
+	
+	finally:
+		gc.enable()
+	
+		pygame.quit()  # Keep this IDLE friendly
 
