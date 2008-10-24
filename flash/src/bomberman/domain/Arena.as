@@ -71,10 +71,6 @@ package bomberman.domain {
 			}
 		}				
 		
-		internal function loadTiles():void {
-			// use Loader class to load the bitmap image containing tiles
-		}
-
 		public function draw():void {
 			this.graphics.beginFill(0xFFCC00);
 			this.graphics.drawCircle(130, 130, 30);

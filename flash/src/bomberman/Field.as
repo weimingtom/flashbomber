@@ -31,7 +31,7 @@ public class Field extends Sprite {
 
     private var fieldTiles:Array = [
                                    [W,W,W,W,W,W,W,W,W,W,W,W,W],
-                                   [W,B,B,B,_,_,_,_,_,_,_,_,W],
+                                   [W,B,B,B,B,_,_,_,_,_,_,_,W],
                                    [W,_,W,_,W,_,W,_,W,_,W,_,W],
                                    [W,_,_,_,_,_,_,_,_,_,_,_,W],
                                    [W,_,W,_,W,_,W,_,W,_,W,_,W],
