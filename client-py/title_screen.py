@@ -35,21 +35,50 @@ sinewave = [
 	136,133,131,129,126,124,121,119,117,114,112,109,107,104,102,100
 ]
 
-scrollText = """
-- PYTHON/BOMBER 2008 - [STOP]
-PROGRAMMING BY MIKKO SAARELA [STOP]
-PRESS ANYKEY TO CONTINUE [STOP]
-"""
+scrollText = "             *GBOMBER 2008*          CODING BY THE G-MEN          PRESS ANYKEY TO CONTINUE          POWERED BY PYTHON        AND THE AMAZING         ... PYGAME LIB     "
+
+sineScrollerIndex = 0
+sineScrollerX = 0
+textIndex = 0
+def waveScroller():
+	global sineScrollerX, sineScrollerIndex, screen, sineScrollerSurface, screenH, screenW, textIndex, scrollTextSurface
+	
+	step = 4	#px
+	sineIndex = sineScrollerIndex
+	for index in range (0, screenW/step):
+		subsurface = sineScrollerSurface.subsurface((index * step, 0, step, 120))
+		screen.blit(subsurface, (0 + (index * step), 200 + (int(sinewave[sineIndex] * 1.2) ) ))
+		sineIndex += 1
+		if sineIndex >= 255:
+			sineIndex = 0
+
+	sineScrollerIndex += 3
+	if sineScrollerIndex >= 255:
+		sineScrollerIndex = 0
+
+	#
+	# make better system here with modulo offsets (width/step)
+	#
+	sineScrollerX -= 5
+	if sineScrollerX < -55:		# width of one character (guessed)
+		textIndex += 1			
+		if textIndex > (len(scrollText) - 1):
+			textIndex = 0
+		sineScrollerX = 0
+		scrollTextSurface.fill((0,0,0))
+		scrollTextSurface = font.render(scrollText[textIndex:], 0, (200,200,200))
+	sineScrollerSurface.fill((0,0,0))
+	sineScrollerSurface.blit(scrollTextSurface, (sineScrollerX, 0))
 
 beam = []
 def setupBeam():
 	global beam	
 	for i in range(0, 16):
-		beam.append((0, 0, i*16))
+		beam.append((0, i*16, 0))
 	for i in range(15, 0, -1):
-		beam.append((0, 0, i*16))
+		beam.append((0, i*16, 0))
 
-beamCenter = screenH / 4
+beamCenter = 270
 
 def drawBeam(sinepos):
 	global screen
@@ -69,21 +98,21 @@ pygame.mouse.set_visible(0)
 #pygame.display.set_icon(pygame.image.load(data.filepath("icon.gif")))
 pygame.display.set_caption("PyBomber 2008")
 clock = pygame.time.Clock()
-FRAMES_PER_SECOND = 100
+FRAMES_PER_SECOND = 150
 
 direction = False
 
 #start positions in sine index < 255
-beams = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
-beamColors = [(255, 0, 0), (255, 255, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0)]
+beams = [0, 15, 30, 45, 60, 75, 90]
+beamColors = [(255, 0, 255), (255, 255, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0)]
 
 def updateBeams():
 	i = 0
 	for beam in beams:
-		if beam >= 255:
+		if beam >= 254:
 			beams[i] = 0
 		else:
-			beams[i] = beam + 1
+			beams[i] = beam + 2
 		i += 1
 		
 	index = 0
@@ -91,11 +120,15 @@ def updateBeams():
 		drawBeam(beam)
 		index += 1
 
-font = pygame.font.Font(None, 64)
+font = pygame.font.Font('c:/Windows/Fonts/DejaVuMonoSansBold.ttf', 100)
 scrollTextSpecific = None
 scrollColors = [140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235, 240, 245, 250, 255, 250, 245, 240, 235, 230, 225, 220, 215, 210, 205, 200, 195, 190, 185, 180, 175, 170, 165, 160, 155, 150, 145, 140]
 currentScrollColor = 0
 scrollX = screenW
+
+sineScrollerSurface = pygame.Surface((screenW, 120))
+sineScrollerSurface.set_colorkey((0,0,0))
+scrollTextSurface = font.render(scrollText, 0, (200,200,200))
 
 def scroller():
 	global screen, scrollX, scrollTextSpecific, currentScrollColor
@@ -110,21 +143,41 @@ def scroller():
 	if scrollX <= 0:
 		scrollX = screenW
 
+logoIndex = 0
 def drawLogo():
-	global screen	
-	logo = pygame.image.load('images/gbomber_logo.png')
-	screen.blit(logo, ((screenW - logo.get_width())/2, 50))
+	global screen, logoIndex	
+	#logo = pygame.image.load('images/gbomber_logo.png')
+	logo = pygame.image.load('images/gbomber_logo_green.png')
+	xPos = (screenW - logo.get_width() - 600)/2
+	xPos += int(sinewave[logoIndex] * 3)
+	logoIndex += 4
+	if logoIndex >= 255:
+		logoIndex = 0
+		
+	screen.blit(logo, (xPos, 50))
 
+def makeWater():
+	global screen
+	subsurface = screen.subsurface((0, 400, 800, 100))
+	water = pygame.transform.flip(subsurface, False, True)
+	pxarray = pygame.PixelArray(water)
+		
+	water = pxarray.make_surface()	
+	del(pxarray)
+	water.set_alpha(100)
+	water.set_colorkey((0,0,0))
+	screen.blit(water, (0, 500))
+	
 def main():
 	global screen
 	try:
-		screen = pygame.display.set_mode((screenW, screenH), pygame.DOUBLEBUF | pygame.HWSURFACE, 16)	# | pygame.FULLSCREEN
+		screen = pygame.display.set_mode((screenW, screenH), pygame.DOUBLEBUF | pygame.HWSURFACE, 16)	#| pygame.FULLSCREEN 
 		
 		setupBeam()
 		gc.disable()
 	
 		looping = True
-		while looping:		
+		while 1:		
 			pygame.display.flip()
 			deltat = clock.tick(FRAMES_PER_SECOND)
 			#print deltat
@@ -134,7 +187,9 @@ def main():
 	
 			drawLogo()
 			updateBeams()
-			scroller()
+			waveScroller()
+			screen.fill((0,0,50), (0, 500, 800, 100))
+			makeWater()
 			
 			# draw screen
 	

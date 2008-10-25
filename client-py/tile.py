@@ -1,7 +1,6 @@
 import pygame
 
-class Tile:
-	# I don't think this class needs to be a pygame Sprite
+class Tile(pygame.sprite.Sprite):
 
 	SOLID = 1
 	BREAKABLE = 2
@@ -22,3 +21,6 @@ class Tile:
 			self.image = pygame.image.load('images/tile_desert_empty.png')
 		self.size = self.image.get_width()
 
+	def update(self, collisions):
+		pass
+	

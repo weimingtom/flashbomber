@@ -15,26 +15,24 @@ screenW = 800
 screenH = 600
 tileSize = 32
 
-#
-# fix this so that it used the object-map instead of character-map
-#
+arenaSurface = pygame.Surface((screenW, screenH))
 def drawArena():
-	global arena
+	global arena, arenaSurface
 		
 	x = y = 0
 	for row in arena.map:
 		for tile in row:
-			screen.blit(tile.image, (x, y))
+			arenaSurface.blit(tile.image, (x, y))
 			x += tileSize
 		x = 0
 		y += tileSize
 
-def newMain():
+def checkKeyboard():
 	global player
 
 	for event in pygame.event.get():
 		if not hasattr(event, 'key'): continue
-		print event.type
+		#print event.type
 		if event.type == KEYDOWN:
 			if event.key == K_ESCAPE: sys.exit(0) # quit the game
 		elif event.type == KEYUP:
@@ -62,20 +60,23 @@ FRAMES_PER_SECOND = 40
 try:
 	screen = pygame.display.set_mode((screenW, screenH))
 	
+	
 	rect = screen.get_rect()
 	player = Player(Player.RED, 'images/player_temp.png', rect.center)
 	player_group = pygame.sprite.RenderPlain(player)
 
 	match = Match()
 	arena = Arena()
+	screen.fill((0,0,0))
+	drawArena()
 	
 	looping = True
 	while looping:		
 		deltat = clock.tick(FRAMES_PER_SECOND)
-		newMain()
 		
-		screen.fill((0,0,0))
-		drawArena()
+		player_group.clear(screen, arenaSurface)
+		checkKeyboard()
+		screen.blit(arenaSurface, (0, 0))
 
 		player_group.update(deltat)
 		player_group.draw(screen)
@@ -83,6 +84,7 @@ try:
 		pygame.display.flip()
 		
 		#if match.roundIsOver():
+		#	inter_results_screen.main()
 		#	break
 		
 		if match.isOver():
