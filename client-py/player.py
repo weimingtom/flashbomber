@@ -2,24 +2,25 @@ import pygame
 
 class Player(pygame.sprite.Sprite):
 
-	RED = 1;
-	BLUE = 2;
-	WHITE = 3;
-	BLACK = 4;
-	GREEN = 5;
+	RED = 1
+	BLUE = 2
+	WHITE = 3
+	BLACK = 4
+	GREEN = 5
 
-	NORMAL_STATE = 1;
-	SKULL_STATE = 2;
+	NORMAL_STATE = 1
+	MAGIC_STATE = 2
 	state = NORMAL_STATE
 
 	playerName = "unnamedPlayer"
 	color = 0
 	startPosition = (0, 0)
 	currentPosition = (0, 0)
-	amountOfBombs = 1;
-	lenghtOfFlames = 2;
-	hasKick = False;
-	hasMulti = False;
+	amountOfBombs = 1
+	lenghtOfFlames = 2
+	hasKick = False
+	hasMulti = False
+	victories = 0
 
 	movingLeft = False
 	movingRight = False
